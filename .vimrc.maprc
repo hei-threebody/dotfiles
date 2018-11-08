@@ -1,0 +1,30 @@
+map <leader>wq :wq<CR>
+
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+inoremap <silent><C-l> <esc><C-w>l  
+inoremap <silent><C-h> <esc><C-w>h
+inoremap <silent><C-j> <esc><C-w>j
+inoremap <silent><C-k> <esc><C-w>k
+
+noremap <silent><C-l> <C-w>l  
+noremap <silent><C-h> <C-w>h
+noremap <silent><C-j> <C-w>j
+noremap <silent><C-k> <C-w>k
+
+inoremap <silent><C-t> <esc><esc>
+
+nnoremap [e  :<c-u>execute 'move -1-'. v:count1<cr>'[
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+
+nnoremap bt :bn<cr>
+nnoremap bp :bp<cr>
+
+
+map <F3> :NERDTreeMirror<CR>
+map <F3> :NERDTreeToggle<CR>

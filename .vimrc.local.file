@@ -1,0 +1,10 @@
+" Theme
+set t_Co=256 
+" set background=dark
+"autocmd ColorScheme janah highlight Normal ctermbg=235
+" colorscheme onedark
+" colorscheme srcery
+colorscheme gruvbox
+" set background=dark
+
+
