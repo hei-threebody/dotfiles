@@ -1,6 +1,6 @@
 set nocompatible
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=/Users/hei_threebody/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
@@ -18,9 +18,16 @@ Plugin 'vim-scripts/autoscroll.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'wesQ3/vim-windowswap'          " Swap your windows without ruining your layout
 Plugin 'myusuf3/numbers.vim'           " a vim plugin for better line numbers 
+Plugin 'severin-lemaignan/vim-minimap'
+Plugin 'liuchengxu/vim-which-key'
+Plugin 'roman/golden-ratio'
+
+Plugin 'blueyed/vim-diminactive'
+" Plugin 'kassio/neoterm'
 
 "File
-Plugin 'Yggdroot/LeaderF'              " An asynchronous fuzzy finder which is used to quickly locate files, buffers, mrus, tags, etc. in large project.
+" Plugin 'Yggdroot/LeaderF'              " An asynchronous fuzzy finder which is used to quickly locate files, buffers, mrus, tags, etc. in large project.
+Plugin 'benizi/vim-automkdir'
 
 "git
 Plugin 'Xuyuanp/nerdtree-git-plugin'
@@ -37,7 +44,7 @@ Plugin 'gcmt/wildfire.vim'
 Plugin 'Maxlufs/LargeFile.vim'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'haya14busa/vim-edgemotion'     " Move to the edge!
-Plugin 'yuttie/comfortable-motion.vim'
+" Plugin 'yuttie/comfortable-motion.vim'
 Plugin 'dbmrq/vim-redacted'            " The best way to ████ the ████
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'tpope/vim-abolish'             " easily search for, substitute, and abbreviate multiple variants of a word
@@ -46,22 +53,46 @@ Plugin 'tpope/vim-surround'
 Plugin 'mattn/emmet-vim'               " emmet-vim is a vim plug-in which provides support for expanding abbreviations similar to emmet.
 Plugin 'godlygeek/tabular'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'andymass/vim-matchup'
+Plugin 'haya14busa/vim-asterisk'
+Plugin 'rhysd/clever-f.vim'
+" Plugin 'takac/vim-hardtime'
+Plugin 'junegunn/vim-peekaboo'
+Plugin 'embear/vim-localvimrc'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'moll/vim-bbye'
+Plugin 'airblade/vim-rooter'
+Plugin 'editorconfig/editorconfig-vim'
+
+" Tmux
+Plugin 'benmills/vimux'
+Plugin 'tmux-plugins/vim-tmux'
+Plugin 'edkolev/promptline.vim'
+" Plugin 'christoomey/vim-tmux-navigator'
 
 " Programming
 "Plugin 'scrooloose/syntastic'
-"Plugin 'w0rp/ale'
+" Plugin 'w0rp/ale'
 Plugin 'xuhdev/SingleCompile'
 Plugin 'skywind3000/asyncrun.vim'
 Plugin 'jpalardy/vim-slime'
 Plugin 'metakirby5/codi.vim'
+Plugin 'wakatime/vim-wakatime'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'james9909/stackanswers.vim'
+Plugin 'wesleyche/srcexpl'
 "Plugin 'DaSea/docsets.vim'
 
+" Github
+Plugin 'junegunn/vim-github-dashboard'
 
 " Highlight
 Plugin 'vim-scripts/YankRing.vim'
 Plugin 'machakann/vim-highlightedyank'
-Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plugin 'vwxyutarooo/nerdtree-devicons-syntax'
 Plugin 'luochen1990/rainbow'
+Plugin 'itchyny/vim-cursorword'
 
 " Bookmark
 Plugin 'MattesGroeger/vim-bookmarks'
@@ -70,6 +101,7 @@ Plugin 'kshenoy/vim-signature'
 " Draw
 Plugin 'vim-scripts/DrawIt'
 Plugin 'fadein/vim-FIGlet'
+Plugin 'junegunn/vim-emoji'
 
 
 " Read
@@ -90,7 +122,7 @@ Plugin 'jerrymarino/iCompleteMe'
 
 " Python
 Plugin 'python-mode/python-mode'
-
+Plugin 'raimon49/requirements.txt.vim'
 
 " Web
 Plugin 'ap/vim-css-color'
@@ -103,7 +135,8 @@ Plugin 'HerringtonDarkholme/yats.vim'  " Yet Another TypeScript Syntax
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'cespare/vim-toml'
 Plugin 'maralla/vim-toml-enhance'
-
+" Plugin 'moll/vim-node'
+" Plugin 'elzr/vim-json'
 
 " Vim
 Plugin 'vim-china/vimdoc-cn'
@@ -112,6 +145,8 @@ Plugin 'bling/minivimrc'
 " Markdown
 Plugin 'lvht/tagbar-markdown'
 Plugin 'plasticboy/vim-markdown'
+" Plugin 'kana/vim-textobj-user'
+" Plugin 'coachshea/vim-textobj-markdown'
 
 " AppleScript
 Plugin 'dearrrfish/vim-applescript'
@@ -152,6 +187,7 @@ Plugin 'mtth/scratch.vim'              " Unobtrusive scratch window
 Plugin 'rhysd/vim-grammarous'
 Plugin 'hotoo/pangu.vim'
 Plugin 'vim-scripts/LanguageTool'
+Plugin 'itchyny/dictionary.vim'
 
 " Theme
 Plugin 'reedes/vim-thematic'
@@ -163,6 +199,9 @@ Plugin 'logico-dev/typewriter'
 Plugin 'joshdick/onedark.vim'
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'mhinz/vim-janah'
+Plugin 'arcticicestudio/nord-vim'
+Plugin 'jacoborus/tender.vim'
+Plugin 'jasonlong/lavalamp'
 call vundle#end()            " required
 filetype plugin indent on    "
 

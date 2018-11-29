@@ -254,26 +254,37 @@ let g:rainbow_conf = {
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                    goyo                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" function! s:goyo_enter()
-"     silent !tmux set status off
-"     silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-"     set noshowmode
-"     set noshowcmd
-"     set scrolloff=999
-"     Limelight
-"     " ...
-" endfunction
-"
-" function! s:goyo_leave()
-"     silent !tmux set status on
-"     silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-"     set showmode
-"     set showcmd
-"     set scrolloff=5
-"     Limelight!
-"     " ...
-" endfunction
-"
+let s:save_option = {}
+function! s:goyo_enter()
+	silent !tmux set status off
+	silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  let s:save_option['showmode'] = &showmode
+  let s:save_option['showcmd'] = &showcmd
+  let s:save_option['scrolloff'] = &scrolloff
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+  if exists(':Limelight') == 2
+    Limelight
+    let s:save_option['limelight'] = 1
+  endif
+endfunction
+
+function! s:goyo_leave()
+	silent !tmux set status on
+	silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  let &showmode = s:save_option['showmode']
+  let &showcmd = s:save_option['showcmd']
+  let &scrolloff = s:save_option['scrolloff']
+  if get(s:save_option,'limelight', 0)
+    execute 'Limelight!'
+  endif
+endfunction
+augroup goyo_map
+  autocmd! User GoyoEnter nested call <SID>goyo_enter()
+  autocmd! User GoyoLeave nested call <SID>goyo_leave()
+augroup END
+
 " autocmd! User GoyoEnter nested call <SID>goyo_enter()
 " autocmd! User GoyoLeave nested call <SID>goyo_leave()
 "
@@ -402,7 +413,7 @@ let g:SignatureMap = {
 "                                 vim-FIGlet                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-command Figlet FIGlet
+" command Figlet FIGlet
 
 "}}}
 
@@ -417,7 +428,7 @@ command Figlet FIGlet
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
-let g:cpp_experimental_simple_template_highlight = 1
+" let g:cpp_experimental_simple_template_highlight = 1
 let g:cpp_concepts_highlight = 1
 "}}}
 
@@ -485,6 +496,15 @@ let g:vim_markdown_emphasis_multiline = 0
 
 let g:tex_fold_enabled=1
 let g:tex_flavor='latex'
+" let g:vimtex_compiler_progname
+let g:vimtex_complete_close_braces = 0
+let g:vimtex_fold_enabled = 0
+let g:vimtex_view_method = 'skim'
+" let g:vimtex_include_indicators = ['input', 'include', 'subfile']
+" let g:vimtex_indent_enabled = 1
+" let g:vimtex_indent_ignored_envs = ['document']
+" let g:vimtex_indent_lists = ['itemize', 'description', 'enumerate',
+" 'thebibliography']
 let g:vimtex_quickfix_ignored_warnings   = []
 "      \ 'Underfull',
 "      \ 'Overfull',
@@ -492,7 +512,7 @@ let g:vimtex_quickfix_ignored_warnings   = []
 "      \ 'Package mpgraphics Warning',
 "       \]
 let g:vimtex_compiler_latexmk = {
-			\ 'background' : 1,
+			\ 'background' : 0,
 			\ 'build_dir' : '',
 			\ 'callback' : 1,
 			\ 'continuous' : 1,
@@ -505,6 +525,15 @@ let g:vimtex_compiler_latexmk = {
 			\   '-interaction=nonstopmode',
 			\ ],
 			\}
+
+  let g:vimtex_doc_handlers = ['MyHandler']
+    function! MyHandler(context)
+      call vimtex#doc#make_selection(a:context)
+      if !empty(a:context.selected)
+        execute '!texdoc' a:context.selected '&'
+      endif
+      return 1
+    endfunction
 
 autocmd Filetype tex setl updatetime=10
 let g:livepreview_engine = 'xelatex' . ''
@@ -548,7 +577,7 @@ let g:ycm_enable_diagnostic_signs = 1
 "" 补全功能在注释中同样有效
 let g:ycm_complete_in_comments=0
 " 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
-"let g:ycm_confirm_extra_conf=1
+let g:ycm_confirm_extra_conf=0
 " 开启 YCM 标签补全引擎
 let g:ycm_collect_identifiers_from_tags_files=1
 let g:ycm_seed_identifiers_with_syntax = 1
@@ -565,11 +594,11 @@ set completeopt-=preview
 let g:ycm_min_num_of_chars_for_completion=2
 " 禁止缓存匹配项，每次都重新生成匹配项
 let g:ycm_cache_omnifunc=1
-" 语法关键字补全         
+" 语法关键字补全
 let g:ycm_seed_identifiers_with_syntax=1
 
 
-let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py_bk'
 "let g:icm_global_ycm_extra_conf='./python/icm/tests/testdata/.ycm_extra_conf.py'
 
 
@@ -579,7 +608,16 @@ let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
 " set tags+=/Volumes/REPERTORY_2/QT/5.11.1/Src/qtbase/src/widgets/kernel/qtwidgets.tags
 " set tags+=/Volumes/REPERTORY_2/QT/5.11.1/Src/qtbase/src/tags
 " set tags+=/Volumes/REPERTORY_3/QT/5.11.1/Src/qtbase/include/qtbase.tags
+"
 
+" set tags+=~/tags/Analysis.tags
+" set tags+=~/tags/Emc.tags
+" set tags+=~/tags/Event.tags
+" set tags+=~/tags/Mdc.tags
+" set tags+=~/tags/Reconstruction.tags
+" set tags+=~/tags/Tof.tags
+" set tags+=~/tags/clhep.tags
+" set tags+=~/tags/root.tags
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                 ultisnips                                  "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -593,4 +631,9 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 "let g:UltiSnipsEditSplit="vertical"
 
 "let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    tmp                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:cursorword=0
 

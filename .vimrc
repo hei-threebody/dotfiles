@@ -15,6 +15,9 @@ set fdm=marker
 set hlsearch
 set incsearch
 
+set showcmd
+set noshowmode
+
 
 set fencs=utf-8,
             "\usc-bom,
@@ -46,6 +49,7 @@ set wildignore+=*.orig,*.rej "Merge resolution files"
 
 imap ao <ESC>
 let mapleader=","
+let maplocalleader="\\"
 nnoremap <leader>n :so $MYVIMRC<CR>:PluginInstall<CR>
 "
 " 按,ev打开配置文件
@@ -74,7 +78,10 @@ highlight Pmenu ctermfg=2 ctermbg=3 guifg=#005f87 guibg=#EEE8D5
 highlight PmenuSel ctermfg=2 ctermbg=3 guifg=#AFD700 guibg=#106900
 
 
-source ~/.vimrc.maprc
-source ~/.vimrc.plugin
-source ~/.vimrc.pluginrc
-source ~/.vimrc.local.file
+source /Users/hei_threebody/.vimrc.plugin
+source /Users/hei_threebody/.vimrc.pluginrc
+source /Users/hei_threebody/.vimrc.local.file
+source /Users/hei_threebody/.vimrc.maprc
+" source /Users/hei_threebody/.vimrc.whichkey
+
+set nonu

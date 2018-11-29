@@ -1,7 +1,9 @@
+" command PI PluginInstall
+
 map <leader>wq :wq<CR>
 
 inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
+nnoremap <F1> :so $MYVIMRC<CR>
 vnoremap <F1> <ESC>
 
 inoremap <silent><C-l> <esc><C-w>l  
@@ -28,3 +30,77 @@ nnoremap bp :bp<cr>
 
 map <F3> :NERDTreeMirror<CR>
 map <F3> :NERDTreeToggle<CR>
+
+
+map <leader>b :CtrlPBuffer<CR>
+
+map <leader>ft :NERDTreeToggle<CR>
+
+" Window Manage"
+
+nnoremap <leader>ss :split<CR>
+nnoremap <leader>sv :vsplit<CR>
+nnoremap <leader>st :only<CR>
+" nnoremap <leader>sx
+nnoremap <leader>sq :close<CR>
+
+
+" File Manage"
+nnoremap <leader>fs :w<CR>
+nnoremap <leader>cd :cd %:h<CR>
+
+
+" Yank Manage"
+nnoremap <leader>ys :YRShow<CR>
+
+
+nnoremap <leader>ut :Tagbar<CR>
+nnoremap <leader>uf :NERDTreeToggle<CR>
+
+
+" Buffer Manage"
+nnoremap <leader>1 :bf<CR>
+nnoremap <leader>2 :bf<CR>:bnext<CR>
+nnoremap <leader>3 :bf<CR>:bnext<CR>:bnext<CR>
+
+" let g:airline#extensions#tabline#buffer_idx_mode = 1
+
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>- <Plug>AirlineSelectPrevTab
+nmap <leader>+ <Plug>AirlineSelectNextTab
+
+
+let g:loaded_golden_ratio = 0
+
+
+map *  <Plug>(asterisk-z*)
+map #  <Plug>(asterisk-z#)
+map g* <Plug>(asterisk-gz*)
+map g# <Plug>(asterisk-gz#)
+
+
+nnoremap <leader>us :Scratch<CR>
+let g:scratch_persistence_file = '.scratch.vim'
+
+function! VimuxSlime()
+	call VimuxSendText(@v)
+	call VimuxSendKeys("Enter")
+endfunction
+
+" If text is selected, save it in the v buffer and send that buffer it to tmux
+vmap <LocalLeader>vs "vy :call VimuxSlime()<CR>
+
+" Select current paragraph and send it to tmux
+nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
+
+" autocmd User targets#mappings#user call targets#mappings#extend({
+"             \ 'B': {'pair': [{'o': '```python', 'c': '```'}]}
+"             \ })
