@@ -1,0 +1,639 @@
+
+
+"{{{Window
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   tagbar                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+map <leader>tag :TagbarToggle<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  taglist                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let Tlist_Show_One_File=1     "不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Exit_OnlyWindow=1   "如果taglist窗口是最后一个窗口，则退出vim
+let Tlist_Ctags_Cmd="/usr/local/bin/ctags" "将taglist与ctags关联
+
+map <F2> :Tlist<CR>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                 ctrlp.vim                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+            \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+            \ 'file': '\v\.(exe|so|dll)$',
+            \ 'link': 'some_bad_symbolic_links',
+            \ }
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  ZoomWin                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" <c-o> is the trigger
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               autoscroll.vim                               "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  nerdtree                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               vim-windowswap                               "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:windowswap_map_keys = 0
+
+
+"}}}
+
+"{{{Editor
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               vim-easymotion                               "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+
+" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
+" Without these mappings, `n` & `N` works fine. (These mappings just provide
+" different highlight method and have some other features )
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                            vim-multiple-cursors                            "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:multi_cursor_use_default_mapping=0
+
+" Default mapping
+let g:multi_cursor_start_word_key      = '<C-n>'
+let g:multi_cursor_select_all_word_key = '<A-n>'
+let g:multi_cursor_start_key           = 'g<C-n>'
+let g:multi_cursor_select_all_key      = 'g<A-n>'
+let g:multi_cursor_next_key            = '<C-n>'
+let g:multi_cursor_prev_key            = '<C-p>'
+let g:multi_cursor_skip_key            = '<C-x>'
+let g:multi_cursor_quit_key            = '<Esc>'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                 vim-align                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               vim-table-mode                               "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! s:isAtStartOfLine(mapping)
+  let text_before_cursor = getline('.')[0 : col('.')-1]
+  let mapping_pattern = '\V' . escape(a:mapping, '\')
+  let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+  return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+endfunction
+
+inoreabbrev <expr> <bar><bar>
+          \ <SID>isAtStartOfLine('\|\|') ?
+          \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+
+let g:table_mode_corner = '|'
+let g:table_mode_border=0
+let g:table_mode_fillchar=' '
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                vim-redacted                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nmap <leader>r <Plug>Redact
+vmap <leader>r <Plug>Redact
+" :RedactedW to persist changes
+" :Redact! to clear the text
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               nerdcommenter                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
+"}}}
+
+"{{{Programming
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    ale                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"ale
+"始终开启标志列
+let g:ale_sign_column_always = 1
+let g:ale_set_highlights = 0
+"自定义error和warning图标
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚡'
+"在vim自带的状态栏中整合ale
+"let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
+"显示Linter名称,出错或警告等相关信息
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+"普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
+nmap sp <Plug>(ale_previous_wrap)
+nmap sn <Plug>(ale_next_wrap)
+"<Leader>s触发/关闭语法检查
+nmap <Leader>s :ALEToggle<CR>
+"<Leader>d查看错误或警告的详细信息
+nmap <Leader>d :ALEDetail<CR>
+
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
+
+let g:ale_linters = {
+\   'c++': ['clang'],
+\   'c': ['clang'],
+\   'python': ['pylint'],
+\}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  asyncrun                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:asyncrun_open = 8
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    codi                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:codi#interpreters = {
+            \ 'jxa': {
+            \ 'bin': ['osascript', '-il',  'JavaScript'],
+            \ 'prompt': '^\(>>\|?>\) ',
+            \ },
+            \}
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                 vim-slime                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:slime_target = "tmux"
+let g:slime_paste_file = "$HOME/.slime_paste"
+" let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":.2"}
+
+"}}}
+
+"{{{Highlight
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                            vim-highlightedyank                             "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+highlight HighlightedyankRegion cterm=reverse gui=reverse
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  rainbow                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:rainbow_active = 0
+let g:rainbow_conf = {
+            \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+            \	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+            \	'operators': '_,_',
+            \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+            \	'separately': {
+            \		'*': {},
+            \		'tex': {
+            \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+            \		},
+            \		'lisp': {
+            \			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+            \		},
+            \		'vim': {
+            \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+            \		},
+            \		'html': {
+            \			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+            \		},
+            \		'css': 0,
+            \	}
+            \}
+
+
+
+
+"}}}
+
+"{{{Read
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    goyo                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let s:save_option = {}
+function! s:goyo_enter()
+	silent !tmux set status off
+	silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  let s:save_option['showmode'] = &showmode
+  let s:save_option['showcmd'] = &showcmd
+  let s:save_option['scrolloff'] = &scrolloff
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+  if exists(':Limelight') == 2
+    Limelight
+    let s:save_option['limelight'] = 1
+  endif
+endfunction
+
+function! s:goyo_leave()
+	silent !tmux set status on
+	silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  let &showmode = s:save_option['showmode']
+  let &showcmd = s:save_option['showcmd']
+  let &scrolloff = s:save_option['scrolloff']
+  if get(s:save_option,'limelight', 0)
+    execute 'Limelight!'
+  endif
+endfunction
+augroup goyo_map
+  autocmd! User GoyoEnter nested call <SID>goyo_enter()
+  autocmd! User GoyoLeave nested call <SID>goyo_leave()
+augroup END
+
+" autocmd! User GoyoEnter nested call <SID>goyo_enter()
+" autocmd! User GoyoLeave nested call <SID>goyo_leave()
+"
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  lite-dfm                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" nnoremap <Leader>z :LiteDFMToggle<CR>
+" nnoremap <Leader>z :LiteDFMToggle<CR>i<Esc>`^
+nnoremap <Leader>z :LiteDFMToggle<CR>:silent !tmux set status > /dev/null 2>&1<CR>:redraw!<CR>
+
+
+
+" let g:lite_dfm_normal_bg_cterm = 234
+" let g:lite_dfm_normal_bg_gui = '#abcabc'
+"
+" let g:lite_dfm_left_offset = 16
+let g:lite_dfm_keep_ruler=0
+"}}}
+
+"{{{Beautify
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                vim-airline                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1 " 启用 Smarter tab line
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                             vim-airline-themes                             "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                vim-startify                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:startify_change_to_dir = 1
+let g:startify_custom_header = []
+let g:startify_change_to_vcs_root = 1
+autocmd VimEnter *
+            \   if !argc()
+            \ |   Startify
+            \ |   wincmd w
+            \ | endif
+
+let g:startify_bookmarks = [
+            \ { 'c': '~/.vimrc' },
+			\ { 'r': '~/Documents/语言/日语' },
+            \ { 'y': '/Users/hei_threebody/Desktop/work/nodeapp/tmp.txt' },
+            \ ]
+
+" let g:startify_custom_header =
+"          \ startify#fortune#cowsay('', '═','║','╔','╗','╝','╚')
+
+  function! StartifyEntryFormat()
+        return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
+    endfunction
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                             vim-indent-guides                              "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" 随 vim 自启动
+let g:indent_guides_enable_on_vim_startup=0
+" " 从第二层开始可视化显示缩进
+let g:indent_guides_start_level=2
+" " 色块宽度
+let g:indent_guides_guide_size=1
+" " 快捷键 i 开/关缩进可视化
+" :nmap <silent> <Leader>i <Plug>IndentGuidesToggle
+"}}}
+
+"{{{Bookmark
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               vim-bookmarks                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+highlight BookmarkSign ctermbg=NONE ctermfg=160
+highlight BookmarkLine ctermbg=194 ctermfg=NONE
+let g:bookmark_sign = '🦄'
+let g:bookmark_highlight_lines = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               vim-signature                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:SignatureMap = {
+        \ 'Leader'             :  "m",
+        \ 'PlaceNextMark'      :  "m,",
+        \ 'ToggleMarkAtLine'   :  "m.",
+        \ 'PurgeMarksAtLine'   :  "m-",
+        \ 'DeleteMark'         :  "dm",
+        \ 'PurgeMarks'         :  "mda",
+        \ 'PurgeMarkers'       :  "m<BS>",
+        \ 'GotoNextLineAlpha'  :  "']",
+        \ 'GotoPrevLineAlpha'  :  "'[",
+        \ 'GotoNextSpotAlpha'  :  "`]",
+        \ 'GotoPrevSpotAlpha'  :  "`[",
+        \ 'GotoNextLineByPos'  :  "]'",
+        \ 'GotoPrevLineByPos'  :  "['",
+        \ 'GotoNextSpotByPos'  :  "mn",
+        \ 'GotoPrevSpotByPos'  :  "mp",
+        \ 'GotoNextMarker'     :  "[+",
+        \ 'GotoPrevMarker'     :  "[-",
+        \ 'GotoNextMarkerAny'  :  "]=",
+        \ 'GotoPrevMarkerAny'  :  "[=",
+        \ 'ListLocalMarks'     :  "ms",
+        \ 'ListLocalMarkers'   :  "m?"
+        \ }
+
+
+
+"}}}
+
+"{{{Draw
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   DrawIt                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                 vim-FIGlet                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" command Figlet FIGlet
+
+"}}}
+
+"{{{Cpp
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                         vim-cpp-enhanced-highlight                         "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+" let g:cpp_experimental_simple_template_highlight = 1
+let g:cpp_concepts_highlight = 1
+"}}}
+
+"{{{IOS
+"
+"
+"}}}
+
+"{{{Python
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                python-mode                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:pymode_python = 'python3'
+let g:pymode_syntax_all = 1
+let g:pymode_lint = 0
+
+if has('python3')
+    silent! python3 1
+endif
+
+
+
+"}}}
+
+"{{{Web
+"
+
+"
+"}}}
+
+"{{{Vim
+"
+"
+"}}}
+
+"{{{Markdown
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                vim-markdown                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_emphasis_multiline = 0
+
+
+
+"}}}
+
+"{{{AppleScript
+
+
+"}}}
+
+"{{{Perl
+
+"}}}
+
+"{{{CMake
+
+
+"}}}
+
+"{{{Latex
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   vimtex                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:tex_fold_enabled=1
+let g:tex_flavor='latex'
+" let g:vimtex_compiler_progname
+let g:vimtex_complete_close_braces = 0
+let g:vimtex_fold_enabled = 0
+let g:vimtex_view_method = 'skim'
+" let g:vimtex_include_indicators = ['input', 'include', 'subfile']
+" let g:vimtex_indent_enabled = 1
+" let g:vimtex_indent_ignored_envs = ['document']
+" let g:vimtex_indent_lists = ['itemize', 'description', 'enumerate',
+" 'thebibliography']
+let g:vimtex_quickfix_ignored_warnings   = []
+"      \ 'Underfull',
+"      \ 'Overfull',
+"      \ 'specifier changed to',
+"      \ 'Package mpgraphics Warning',
+"       \]
+let g:vimtex_compiler_latexmk = {
+			\ 'background' : 0,
+			\ 'build_dir' : '',
+			\ 'callback' : 1,
+			\ 'continuous' : 1,
+			\ 'executable' : 'latexmk',
+			\ 'options' : [
+			\   '-verbose',
+			\   '-xelatex',
+			\   '-file-line-error',
+			\   '-synctex=1',
+			\   '-interaction=nonstopmode',
+			\ ],
+			\}
+
+  let g:vimtex_doc_handlers = ['MyHandler']
+    function! MyHandler(context)
+      call vimtex#doc#make_selection(a:context)
+      if !empty(a:context.selected)
+        execute '!texdoc' a:context.selected '&'
+      endif
+      return 1
+    endfunction
+
+autocmd Filetype tex setl updatetime=10
+let g:livepreview_engine = 'xelatex' . ''
+let g:livepreview_previewer = 'open -a Skim'
+"}}}
+
+"{{{Reminder
+"
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                 vim-notes                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:notes_directories = ['~/Notes/']
+"
+"}}}
+
+"{{{Language
+"
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                LanguageTool                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:languagetool_jar = '/Users/hei_threebody/.vim/bundle/vim-grammarous/misc/LanguageTool-4.1/languagetool-commandline.jar'
+
+"}}}
+
+"{{{Theme
+"
+"
+"}}}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               YouCompleteMe                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"let g:loaded_youcompleteme = 1
+let g:ycm_show_diagnostics_ui = 2
+let g:ycm_enable_diagnostic_signs = 1
+"
+"" 补全功能在注释中同样有效
+let g:ycm_complete_in_comments=0
+" 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
+let g:ycm_confirm_extra_conf=0
+" 开启 YCM 标签补全引擎
+let g:ycm_collect_identifiers_from_tags_files=1
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_min_num_of_chars_for_completion= 0
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+" 引入 C++ 标准库tags
+" set tags+=/data/misc/software/misc./vim/stdcpp.tags
+" set tags+=~/root.ctags
+" YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
+"inoremap <leader>; <C-x><C-o>
+" 补全内容不以分割子窗口形式出现，只显示补全列表
+set completeopt-=preview
+" 从第一个键入字符就开始罗列匹配项
+let g:ycm_min_num_of_chars_for_completion=2
+" 禁止缓存匹配项，每次都重新生成匹配项
+let g:ycm_cache_omnifunc=1
+" 语法关键字补全
+let g:ycm_seed_identifiers_with_syntax=1
+
+
+let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py_bk'
+"let g:icm_global_ycm_extra_conf='./python/icm/tests/testdata/.ycm_extra_conf.py'
+
+
+" set tags+=/usr/local/Cellar/clhep/2.4.1.0/include/CLHEP/clhep.tags
+" set tags+=/Volumes/REPERTORY_2/QT/5.11.1/clang_64/include/qt.tags
+" set tags+=/Volumes/REPERTORY_2/QT/5.11.1/Src/qtbase/include/qtbase.tags
+" set tags+=/Volumes/REPERTORY_2/QT/5.11.1/Src/qtbase/src/widgets/kernel/qtwidgets.tags
+" set tags+=/Volumes/REPERTORY_2/QT/5.11.1/Src/qtbase/src/tags
+" set tags+=/Volumes/REPERTORY_3/QT/5.11.1/Src/qtbase/include/qtbase.tags
+"
+
+" set tags+=~/tags/Analysis.tags
+" set tags+=~/tags/Emc.tags
+" set tags+=~/tags/Event.tags
+" set tags+=~/tags/Mdc.tags
+" set tags+=~/tags/Reconstruction.tags
+" set tags+=~/tags/Tof.tags
+" set tags+=~/tags/clhep.tags
+" set tags+=~/tags/root.tags
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                 ultisnips                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-h>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+"let g:UltiSnipsEditSplit="vertical"
+
+"let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    tmp                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:cursorword=0
+
